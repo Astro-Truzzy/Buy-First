@@ -1,0 +1,21 @@
+# Secrets — never commit these
+.env
+
+# User-uploaded files (product images uploaded via admin)
+public/uploads/*
+!public/uploads/.gitkeep
+
+# Local logs (e.g. emails written to file during development)
+storage/logs/*
+!storage/logs/.gitkeep
+storage/mail/*
+!storage/mail/.gitkeep
+storage/rate/*
+!storage/rate/.gitkeep
+
+# Project-local MySQL data files — machine-specific, never committed
+storage/mysql-data/
+
+# Editor/OS noise
+.DS_Store
+Thumbs.db

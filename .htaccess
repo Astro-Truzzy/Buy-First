@@ -1,0 +1,12 @@
+# If Apache is pointed at the project root instead of /public,
+# send every request into public/ so .env, /app and /storage stay private.
+
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteRule ^public/ - [L]
+    RewriteRule ^(.*)$ public/$1 [L]
+</IfModule>
+
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>

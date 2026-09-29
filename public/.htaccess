@@ -1,0 +1,15 @@
+# Apache rewrite rules (used only when serving through XAMPP's Apache —
+# the PHP built-in dev server ignores this file and does the same job
+# via the router script instead).
+#
+# Meaning: if the requested path is NOT a real file on disk (like a CSS
+# or image file), send the request to index.php so the router handles it.
+
+RewriteEngine On
+RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteRule ^ index.php [L]
+
+<FilesMatch "^\.env">
+    Require all denied
+</FilesMatch>

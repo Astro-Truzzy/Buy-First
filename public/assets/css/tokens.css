@@ -1,0 +1,129 @@
+/* ==========================================================================
+   BuyFirst design tokens
+   Every design decision lives here as a CSS custom property.
+   The rest of the CSS only ever uses var(--token) — never raw values.
+   Palette rule: flat solid colors only. No gradients, no glow.
+   Glass is a deliberate, narrow exception (see --glass-* below): reserved
+   for floating chrome that sits over content — header, mega menu, search
+   suggestions, cookie banner. Never used on cards, buttons, or product
+   surfaces, which stay flat.
+   ========================================================================== */
+
+:root {
+    /* Color */
+    --ink: #0a0a0a;          /* near-black: text, header, buttons */
+    --ink-soft: #1a1a1a;     /* slightly lifted black for surfaces on dark */
+    --paper: #f7f7f4;        /* off-white page background */
+    --white: #ffffff;        /* pure white: cards, header when solid */
+    --accent: #e01e2f;       /* BuyFirst red: sale, badges, key CTAs */
+    --gray-600: #55554f;     /* secondary text */
+    --gray-400: #8a8a84;     /* muted text, placeholders */
+    --gray-100: #ecece8;     /* light fill: media placeholders, chips */
+    --line: #e2e2dd;         /* hairline borders on light */
+    --line-dark: #2b2b2b;    /* hairline borders on dark */
+
+    /* Typography */
+    --font-display: 'Anton', 'Arial Narrow', sans-serif;
+    --font-body: 'Archivo', 'Helvetica Neue', Arial, sans-serif;
+
+    /* Type scale — clamp(min, fluid, max) scales smoothly with viewport */
+    --text-hero: clamp(3rem, 9vw, 7.5rem);
+    --text-h1: clamp(2.25rem, 5vw, 4rem);
+    --text-h2: clamp(1.75rem, 3.5vw, 2.75rem);
+    --text-h3: 1.25rem;
+    --text-body: 1rem;
+    --text-small: 0.875rem;
+
+    /* Spacing scale */
+    --s-1: 0.25rem;
+    --s-2: 0.5rem;
+    --s-3: 1rem;
+    --s-4: 1.5rem;
+    --s-5: 2.5rem;
+    --s-6: 4rem;
+    --s-7: 6rem;
+
+    /* Shape — sharp and athletic. 4px is our maximum radius. */
+    --radius: 4px;
+
+    /* Form controls — one height and pad so every field lines up with buttons. */
+    --control-h: 3rem;
+    --control-h-sm: 2.5rem;
+    --control-pad-x: 0.9rem;
+
+    /* Layout */
+    --container: 1440px;
+    --header-h: 64px;
+
+    /* Motion */
+    --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    --dur-fast: 160ms;
+    --dur: 300ms;
+    --dur-slow: 550ms;
+
+    /* Glass — floating chrome only (header, mega menu, search suggestions,
+       cookie banner). Blur + saturate + a hairline highlight, no color tint. */
+    --glass-blur: 56px;
+    --glass-saturate: 2;
+    --glass-distortion: url(#glass-distortion);
+    --glass-fill-light: rgba(255, 255, 255, 0.82);
+    --glass-fill-dark: rgba(10, 10, 10, 0.84);
+    --glass-border-light: rgba(255, 255, 255, 0.5);
+    --glass-border-dark: rgba(255, 255, 255, 0.14);
+    --glass-rim: rgba(0, 0, 0, 0.18);
+    --glass-shadow: 0 8px 30px rgba(0, 0, 0, 0.14);
+
+    /* Fixed chrome colors — never themed. A handful of solid-fill components
+       (buttons, footer, hero banners, active-state badges, the admin
+       sidebar, floating glass dropdowns) are designed to read as solid
+       dark chrome with light text regardless of site theme, the same way
+       the glass tokens above never theme either. They reference these
+       instead of --ink/--white/--paper so dark mode can't invert them. */
+    --ink-fixed: #0a0a0a;
+    --white-fixed: #ffffff;
+    --paper-fixed: #f7f7f4;
+    --success-fixed: #1a7f37; /* cart-toast green — flat solid, never themed */
+
+    /* Subtle hover tint for icon buttons sitting on themed (--white/--paper)
+       surfaces — darkens on light backgrounds, lightens on dark ones. */
+    --hover-tint: rgba(0, 0, 0, 0.06);
+
+    color-scheme: light;
+}
+
+/* ==========================================================================
+   Dark mode
+   Reassigns the canvas/text/border roles above so pages, cards, forms and
+   admin panels go dark. Applies automatically to a visitor's OS preference,
+   and can be overridden per-visitor by JS toggling [data-theme] on <html>
+   (see main.js) — the explicit attribute always wins over the OS setting.
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --ink: #f2f1ec;
+        --ink-soft: #d8d6cf;
+        --paper: #141310;
+        --white: #1e1d19;
+        --gray-600: #b8b6ad;
+        --gray-400: #95938a;
+        --gray-100: #262521;
+        --line: #302f2a;
+        --hover-tint: rgba(255, 255, 255, 0.08);
+        color-scheme: dark;
+    }
+}
+:root[data-theme="dark"] {
+    --ink: #f2f1ec;
+    --ink-soft: #d8d6cf;
+    --paper: #141310;
+    --white: #1e1d19;
+    --gray-600: #b8b6ad;
+    --gray-400: #95938a;
+    --gray-100: #262521;
+    --line: #302f2a;
+    --hover-tint: rgba(255, 255, 255, 0.08);
+    color-scheme: dark;
+}
+:root[data-theme="light"] {
+    color-scheme: light;
+}
